@@ -9,13 +9,35 @@
 # This file is based on PyMesh's unit test setup.
 
 # Include directories to search for source.
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src)
-GET_FILENAME_COMPONENT(LIBIGL_PATH ${PROJECT_SOURCE_DIR} DIRECTORY)
-INCLUDE_DIRECTORIES(${LIBIGL_PATH}/include/)
+include_directories(${PROJECT_SOURCE_DIR}/src)
+get_filename_component(LIBIGL_PATH ${PROJECT_SOURCE_DIR} DIRECTORY)
+include_directories(${LIBIGL_PATH}/include/)
 
-# Set build type.
-SET(CMAKE_BUILD_TYPE Debug)
-#SET(CMAKE_BUILD_TYPE Release)
+# http://stackoverflow.com/a/18234926/148668
+# -stdlib=libc++ breaks gcc (for clang, the correct stdlib will be used with
+# -std=c++11 anyway)
+macro(remove_cxx_flag flag)
+  string(REPLACE "${flag}" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+endmacro()
+remove_cxx_flag("-stdlib=libc++")
+
+find_package(OpenMP)
+if (OPENMP_FOUND AND NOT WIN32)
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
+
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_COLOR_MAKEFILE ON)
+
+if(CMAKE_BUILD_TYPE MATCHES RELEASE)
+  add_definitions(-DNDEBUG)
+endif(CMAKE_BUILD_TYPE MATCHES RELEASE)
+
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-register")
+endif()
 
 # Create 64 bits binary.  32 bits support is dropped.
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -37,16 +59,8 @@ ADD_DEFINITIONS(-DTEST_DIR="${PROJECT_SOURCE_DIR}")
 # Include current directory
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
 
-# Include Eigen
-#SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-SET(CMAKE_MODULE_PATH ${LIBIGL_PATH}/tutorial/cmake)
-FIND_PACKAGE(Eigen REQUIRED)
-INCLUDE_DIRECTORIES(${EIGEN_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(${EIGEN_INCLUDE_DIRS}/unsupported)
-ADD_DEFINITIONS(-DEIGEN_YES_I_KNOW_SPARSE_MODULE_IS_NOT_STABLE_YET)
-
 # Add googletest googlemock support
-ADD_SUBDIRECTORY(${LIBIGL_PATH}/external/googletest/googlemock
+ADD_SUBDIRECTORY(${PROJECT_SOURCE_DIR}/external/googletest/googlemock
     ${CMAKE_CURRENT_BINARY_DIR}/gtest)
 SET(GTEST_BOTH_LIBRARIES gtest gmock)
 INCLUDE_DIRECTORIES(${gmock_SOURCE_DIR})

@@ -1,9 +1,6 @@
-FILE(GLOB TEST_SRC_FILES *.cpp main.cpp)
-FILE(GLOB TEST_INC_FILES *.h *.inl)
+file(GLOB TEST_SRC_FILES *.cpp main.cpp)
+file(GLOB TEST_INC_FILES *.h *.inl)
 
-ADD_EXECUTABLE(igl_tests ${TEST_SRC_FILES} ${TEST_INC_FILES})
-TARGET_LINK_LIBRARIES(igl_tests ${GTEST_BOTH_LIBRARIES})
-ADD_CUSTOM_COMMAND(TARGET igl_tests POST_BUILD COMMAND igl_tests)
-
-ADD_SUBDIRECTORY(cgal)
-ADD_SUBDIRECTORY(boolean)
+add_executable(igl_tests ${TEST_SRC_FILES} ${TEST_INC_FILES})
+target_link_libraries(igl_tests ${GTEST_BOTH_LIBRARIES})
+add_custom_command(TARGET igl_tests POST_BUILD COMMAND igl_tests)
