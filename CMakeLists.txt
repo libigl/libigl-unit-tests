@@ -35,7 +35,7 @@ find_package(EIGEN REQUIRED)
 include_directories( ${EIGEN_INCLUDE_DIR})
 
 find_package(CORK QUIET)
-find_package(CGAL REQUIRED)
+find_package(CGAL QUIET)
 find_package(EMBREE QUIET)
 find_package(LIBCOMISO QUIET)
 find_package(MATLAB QUIET)
