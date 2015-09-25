@@ -2,6 +2,20 @@
 
 #include <igl/cgal/outer_facet.h>
 
+namespace OuterFacetHelper {
+
+/**
+ * Check if the outer facet is indeed valid.
+ * Assumption: mesh is closed.
+ */
+template<typename DerivedV, typename DerivedF>
+void assert_outer_facet_is_correct(
+        const Eigen::PlainObjectBase<DerivedV>& V,
+        const Eigen::PlainObjectBase<DerivedF>& F,
+        size_t fid, bool flipped) {
+    // Todo.
+}
+
 TEST(OuterFacet, Simple) {
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;
@@ -43,40 +57,9 @@ TEST(OuterFacet, DuplicatedOppositeFaces) {
 }
 
 TEST(OuterFacet, FullyDegnerated) {
-    Eigen::MatrixXd V(7, 3);
-    V <<  0.0, 0.0, 0.0, // 0
-          1.0, 0.0, 0.0, // 1
-          0.0, 1.0, 0.0, // 2
-          0.0, 0.0, 1.0, // 3
-         -1.0, 0.0, 0.0, // 4
-          0.0,-1.0, 0.0, // 5
-          0.0, 0.0,-1.0; // 6
-
-    Eigen::MatrixXi F(24, 3);
-    F << 0, 1, 2,
-         0, 2, 1,
-         0, 1, 5,
-         0, 5, 1,
-         0, 1, 3,
-         0, 3, 1,
-         0, 1, 6,
-         0, 6, 1,
-         0, 4, 2,
-         0, 2, 4,
-         0, 4, 5,
-         0, 5, 4,
-         0, 4, 3,
-         0, 3, 4,
-         0, 4, 6,
-         0, 6, 4,
-         0, 2, 3,
-         0, 3, 2,
-         0, 5, 3,
-         0, 3, 5,
-         0, 2, 6,
-         0, 6, 2,
-         0, 5, 6,
-         0, 6, 5;
+    Eigen::MatrixXd V;
+    Eigen::MatrixXi F;
+    test_common::load_mesh("degenerated.obj", V, F);
 
     Eigen::VectorXi I(F.rows());
     I.setLinSpaced(F.rows(), 0, F.rows()-1);
@@ -106,3 +89,4 @@ TEST(OuterFacet, InvertedNormal) {
     ASSERT_TRUE(flipped);
 }
 
+}
