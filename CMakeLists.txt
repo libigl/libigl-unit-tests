@@ -12,7 +12,7 @@ project(libigl_unit_tests)
 message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
 
 option(LIBIGL_USE_STATIC_LIBRARY "Use static library" OFF)
-option(CMAKE_VERBOSE_MAKEFILE)
+option(CMAKE_VERBOSE_MAKEFILE "Verbose CMAKE output" OFF)
 if(LIBIGL_USE_STATIC_LIBRARY)
   add_definitions(-DIGL_STATIC_LIBRARY)
 endif(LIBIGL_USE_STATIC_LIBRARY)
