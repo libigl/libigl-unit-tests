@@ -1,6 +1,7 @@
 # use glob syntax.
 syntax: glob
 scripts/change_name.sh
+build
 *.so
 *.so.[0123456789]
 *.so.[0123456789].[0123456789]

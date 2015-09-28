@@ -25,7 +25,7 @@ if(MSVC)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR} )
 else(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") #### Libigl requires a modern C++ compiler that supports c++11
-  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../" )
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(MSVC)
 
 find_package(LIBIGL REQUIRED)
