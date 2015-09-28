@@ -89,4 +89,20 @@ TEST(OuterFacet, InvertedNormal) {
     ASSERT_TRUE(flipped);
 }
 
+TEST(OuterFacet, SliverTet) {
+    Eigen::MatrixXd V;
+    Eigen::MatrixXi F;
+    test_common::load_mesh("sliver_tet.ply", V, F);
+
+    Eigen::VectorXi I(F.rows());
+    I.setLinSpaced(F.rows(), 0, F.rows()-1);
+
+    size_t fid = F.rows() + 1;
+    bool flipped;
+    igl::cgal::outer_facet(V, F, I, fid, flipped);
+
+    ASSERT_LT(fid, F.rows());
+    ASSERT_FALSE(flipped);
+}
+
 }
