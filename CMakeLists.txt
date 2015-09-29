@@ -1,9 +1,9 @@
 # This file is part of libigl, a simple c++ geometry processing library.
-# 
+#
 # Copyright (C) 2015 Qingnan Zhou <qnzhou@gmail.com>
-# 
-# This Source Code Form is subject to the terms of the Mozilla Public License 
-# v. 2.0. If a copy of the MPL was not distributed with this file, You can 
+#
+# This Source Code Form is subject to the terms of the Mozilla Public License
+# v. 2.0. If a copy of the MPL was not distributed with this file, You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 #
 # This file is based on PyMesh's unit test setup.
@@ -20,7 +20,9 @@ endif(LIBIGL_USE_STATIC_LIBRARY)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 if(MSVC)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /bigobj") ### Enable parallel compilation for Visual Studio
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /bigobj" ) ### Enable parallel compilation for Visual Studio
+  set(CMAKE_CXX_FLAGS_RELEASE "/MT")
+  set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR} )
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR} )
 else(MSVC)
@@ -51,7 +53,6 @@ if(LIBIGL_USE_STATIC_LIBRARY)
   add_subdirectory("${LIBIGL_PATH}/optional" "libigl")
 endif(LIBIGL_USE_STATIC_LIBRARY)
 include_directories("${LIBIGL_INCLUDE_DIR}")
-
 
 include(Settings.cmake)
 
