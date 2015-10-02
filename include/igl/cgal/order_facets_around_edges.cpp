@@ -55,9 +55,9 @@ void assert_order(
         //igl::per_face_normals_stable(V, F, N);
         //igl::per_face_normals(V, F, N);
         test_common::load_matrix(normal, N);
-        igl::cgal::order_facets_around_edges(V, F, N, E, uE, EMAP, uE2E, uE2oE, uE2C);
+        igl::cgal::order_facets_around_edges(V, F, N, uE, uE2E, uE2oE, uE2C);
     } else {
-        igl::cgal::order_facets_around_edges(V, F, E, uE, EMAP, uE2E, uE2oE, uE2C);
+        igl::cgal::order_facets_around_edges(V, F, uE, uE2E, uE2oE, uE2C);
     }
 
     const size_t num_uE = uE.rows();
