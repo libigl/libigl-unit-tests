@@ -57,6 +57,6 @@ include(Settings.cmake)
 # Process code in each subdirectories
 add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl)
 if(CGAL_FOUND)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/boolean)
-  add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/cgal)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/copyleft/boolean)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/copyleft/cgal)
 endif(CGAL_FOUND)
