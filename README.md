@@ -1,4 +1,5 @@
 # Unit Tests for [libigl](https://github.com/libigl/libigl)
+[![Build Status](https://travis-ci.org/libigl/libigl-unit-tests.svg?branch=master)](https://travis-ci.org/libigl/libigl-unit-tests)
 
 Get started with
 
