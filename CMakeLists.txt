@@ -18,6 +18,11 @@ endif(LIBIGL_USE_STATIC_LIBRARY)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+find_package(LIBIGL QUIET)
+if (NOT LIBIGL_FOUND)
+   message(FATAL_ERROR "libigl not found --- You can download it using: \n git clone --recursive https://github.com/libigl/libigl.git ${PROJECT_SOURCE_DIR}/../libigl")
+endif()
+
 if(MSVC)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /bigobj" ) ### Enable parallel compilation for Visual Studio
   set(CMAKE_CXX_FLAGS_RELEASE "/MT")
@@ -29,29 +34,44 @@ else(MSVC)
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 endif(MSVC)
 
-find_package(LIBIGL REQUIRED)
-set(LIBIGL_PATH "${LIBIGL_INCLUDE_DIR}/../")
-set(CMAKE_MODULE_PATH "${LIBIGL_PATH}/tutorial/cmake")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+# libigl options: choose between header only and compiled static library
+# Header-only is preferred for small projects. For larger projects the static build
+# considerably reduces the compilation times
+option(LIBIGL_USE_STATIC_LIBRARY "Use LibIGL as static library" OFF)
+# add a customizable menu bar
+option(LIBIGL_WITH_NANOGUI     "Use Nanogui menu"   OFF)
+# libigl options: choose your dependencies (by default everything is OFF except opengl) 
+option(LIBIGL_WITH_VIEWER      "Use OpenGL viewer"  OFF)
+option(LIBIGL_WITH_OPENGL      "Use OpenGL"         OFF)
+option(LIBIGL_WITH_GLFW        "Use GLFW"           OFF)
+option(LIBIGL_WITH_BBW         "Use BBW"            OFF)
+option(LIBIGL_WITH_EMBREE      "Use Embree"         OFF)
+option(LIBIGL_WITH_PNG         "Use PNG"            OFF)
+option(LIBIGL_WITH_TETGEN      "Use Tetgen"         OFF)
+option(LIBIGL_WITH_TRIANGLE    "Use Triangle"       OFF)
+option(LIBIGL_WITH_XML         "Use XML"            OFF)
+option(LIBIGL_WITH_LIM         "Use LIM"            OFF)
+option(LIBIGL_WITH_COMISO      "Use CoMiso"         OFF)
+option(LIBIGL_WITH_MATLAB      "Use Matlab"         OFF) # This option is not supported yet
+option(LIBIGL_WITH_MOSEK       "Use MOSEK"          OFF) # This option is not supported yet
+option(LIBIGL_WITH_CGAL        "Use CGAL"           OFF)
+if(LIBIGL_WITH_CGAL) # Do not remove or move this block, the cgal build system fails without it
+  find_package(CGAL REQUIRED)
+  set(CGAL_DONT_OVERRIDE_CMAKE_FLAGS TRUE CACHE BOOL "CGAL's CMAKE Setup is super annoying ")
+  include(${CGAL_USE_FILE})
+endif()
+add_subdirectory("${LIBIGL_INCLUDE_DIR}/../shared/cmake" "libigl")
+# libigl information 
+message("libigl includes: ${LIBIGL_INCLUDE_DIRS}")
+message("libigl libraries: ${LIBIGL_LIBRARIES}")
+message("libigl extra sources: ${LIBIGL_EXTRA_SOURCES}")
+message("libigl extra libraries: ${LIBIGL_EXTRA_LIBRARIES}")
+message("libigl definitions: ${LIBIGL_DEFINITIONS}")
 
-find_package(EIGEN REQUIRED)
-include_directories( ${EIGEN_INCLUDE_DIR})
-
-find_package(CORK QUIET)
-find_package(CGAL QUIET)
-find_package(EMBREE QUIET)
-find_package(LIBCOMISO QUIET)
-find_package(MATLAB QUIET)
-find_package(MOSEK QUIET)
-find_package(TETGEN QUIET)
-find_package(TINYXML2 QUIET)
-find_package(TRIANGLE QUIET)
-
-#Compile libigl
-add_definitions(-DIGL_NO_OPENGL)
-if(LIBIGL_USE_STATIC_LIBRARY)
-  add_subdirectory("${LIBIGL_PATH}/optional" "libigl")
-endif(LIBIGL_USE_STATIC_LIBRARY)
-include_directories("${LIBIGL_INCLUDE_DIR}")
+# Prepare the build environment
+include_directories(${LIBIGL_INCLUDE_DIRS})
+add_definitions(${LIBIGL_DEFINITIONS})
 
 include(Settings.cmake)
 
