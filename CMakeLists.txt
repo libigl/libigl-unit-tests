@@ -11,11 +11,6 @@ cmake_minimum_required(VERSION 2.6)
 project(libigl_unit_tests)
 message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
 
-option(LIBIGL_USE_STATIC_LIBRARY "Use static library" OFF)
-if(LIBIGL_USE_STATIC_LIBRARY)
-  add_definitions(-DIGL_STATIC_LIBRARY)
-endif(LIBIGL_USE_STATIC_LIBRARY)
-
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 find_package(LIBIGL QUIET)
