@@ -70,6 +70,9 @@ add_definitions(${LIBIGL_DEFINITIONS})
 
 include(Settings.cmake)
 
+# Set up common libraries to link against
+set(COMMON_LIBRARIES ${GTEST_BOTH_LIBRARIES} ${LIBIGL_LIBRARIES} ${LIBIGL_EXTRA_LIBRARIES})
+
 # Process code in each subdirectories
 add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl)
 if(CGAL_FOUND)

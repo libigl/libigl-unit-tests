@@ -11,5 +11,5 @@ file(GLOB TEST_SRC_FILES *.cpp main.cpp)
 file(GLOB TEST_INC_FILES *.h *.inl)
 
 add_executable(igl_boolean_tests ${TEST_SRC_FILES} ${TEST_INC_FILES})
-target_link_libraries(igl_boolean_tests ${GTEST_BOTH_LIBRARIES} ${CGAL_LIBRARIES})
+target_link_libraries(igl_boolean_tests ${COMMON_LIBRARIES} ${CGAL_LIBRARIES})
 add_custom_command(TARGET igl_boolean_tests POST_BUILD COMMAND igl_boolean_tests)
