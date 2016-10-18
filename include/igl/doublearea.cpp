@@ -1,12 +1,16 @@
 #include <test_common.h>
 #include <igl/doublearea.h>
 
-TEST(doublearea, simple)
+class doublearea : public ::testing::TestWithParam<std::string> {};
+
+TEST_P(doublearea, VF_vs_ABC )
 {
   Eigen::MatrixXd V;
   Eigen::MatrixXi F;
-  test_common::load_mesh("elephant.off", V, F);
+  test_common::load_mesh(GetParam(), V, F);
 
+  // Check that computing double area with (V,F) is the same as computing
+  // double area with (V1,V2,V2)
   Eigen::VectorXd A1,A2;
   igl::doublearea(V,F,A1);
   Eigen::MatrixXd A(F.rows(),3);
@@ -25,3 +29,11 @@ TEST(doublearea, simple)
     ASSERT_NEAR(A1(a),A2(a),1e-15);
   }
 }
+
+INSTANTIATE_TEST_CASE_P
+(
+ all_meshes,
+ doublearea,
+ ::testing::ValuesIn(test_common::all_meshes()),
+ test_common::string_test_name
+);

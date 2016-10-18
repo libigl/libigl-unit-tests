@@ -1,11 +1,13 @@
 #include <test_common.h>
 #include <igl/edge_flaps.h>
 
-TEST(edge_flaps, simple)
+class edge_flaps : public ::testing::TestWithParam<std::string> {};
+
+TEST_P(edge_flaps, verify)
 {
   Eigen::MatrixXd V;
   Eigen::MatrixXi F;
-  test_common::load_mesh("elephant.off", V, F);
+  test_common::load_mesh(GetParam(), V, F);
 
   Eigen::MatrixXi efE,efEF,efEI;
   Eigen::VectorXi efEMAP;
@@ -33,5 +35,12 @@ TEST(edge_flaps, simple)
       }
     }
   }
-
 }
+
+INSTANTIATE_TEST_CASE_P
+(
+ all_meshes,
+ edge_flaps,
+ ::testing::ValuesIn(test_common::all_meshes()),
+ test_common::string_test_name
+);
