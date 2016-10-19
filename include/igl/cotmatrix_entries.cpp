@@ -29,13 +29,25 @@ TEST(cotmatrix_entries, simple)
   //Their (half)cotangent must value 0.5 or 0.0
   for(int f = 0;f<C1.rows();f++)
   {
-    for(int v = 0;v<3;v++)
+#ifdef IGL_EDGE_LENGTHS_SQUARED_H
+      //Hard assert if we have edge_lenght_squared
+      for(int v = 0;v<3;v++)
         if (C1(f,v) > 0.1)
-           ASSERT_EQ(0.5, C1(f,v));
+            ASSERT_EQ(0.5, C1(f,v));
         else
            ASSERT_EQ(0.0, C1(f,v));
-    //All cotangents sum 1.0 for those triangles
-    ASSERT_EQ(1.0, C1.row(f).sum());
+       //All cotangents sum 1.0 for those triangles
+       ASSERT_EQ(1.0, C1.row(f).sum());
+#else
+      //Soft assert if we have not edge_lenght_squared
+      for(int v = 0;v<3;v++)
+        if (C1(f,v) > 0.1)
+            ASSERT_NEAR(0.5, C1(f,v), epsilon);
+        else
+            ASSERT_NEAR(0.0, C1(f,v), epsilon);
+       //All cotangents sum 1.0 for those triangles
+       ASSERT_NEAR(1.0, C1.row(f).sum(), epsilon);
+#endif
   }
 
   //Check the regular tetrahedron
@@ -58,14 +70,27 @@ TEST(cotmatrix_entries, simple)
   //All angles still measure 45 or 90 degrees
   //Their (half)cotangent must value 0.5 or 0.0
   for(int f = 0;f<C1.rows();f++)
-  {
-    for(int v = 0;v<3;v++)
+  {    
+#ifdef IGL_EDGE_LENGTHS_SQUARED_H
+      //Hard assert if we have edge_lenght_squared
+      for(int v = 0;v<3;v++)
         if (C1(f,v) > 0.1)
-           ASSERT_EQ(0.5, C1(f,v));
+            ASSERT_EQ(0.5, C1(f,v));
         else
            ASSERT_EQ(0.0, C1(f,v));
-    //All cotangents sum 1.0 for those triangles
-    ASSERT_EQ(1.0, C1.row(f).sum());
+       //All cotangents sum 1.0 for those triangles
+       ASSERT_EQ(1.0, C1.row(f).sum());
+#else
+      //Soft assert if we have not edge_lenght_squared
+      for(int v = 0;v<3;v++)
+        if (C1(f,v) > 0.1)
+            ASSERT_NEAR(0.5, C1(f,v), epsilon);
+        else
+            ASSERT_NEAR(0.0, C1(f,v), epsilon);
+       //All cotangents sum 1.0 for those triangles
+       ASSERT_NEAR(1.0, C1.row(f).sum(), epsilon);
+#endif
+
   }
 
   //Check the huge regular tetrahedron
@@ -92,7 +117,7 @@ TEST(cotmatrix_entries, simple)
         if (C1(f,v) > 0.1)
            ASSERT_NEAR(0.5, C1(f,v), epsilon);
         else
-           ASSERT_EQ(0.0, C1(f,v));
+           ASSERT_NEAR(0.0, C1(f,v), epsilon);
     //All cotangents sum 1.0 for those triangles
     ASSERT_NEAR(1.0, C1.row(f).sum(), epsilon);
   }
