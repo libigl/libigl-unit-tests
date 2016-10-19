@@ -56,9 +56,18 @@ TEST(cotmatrix, cube)
   ASSERT_EQ(V.rows(), L1.cols());
   for(int f = 0;f<L1.rows();f++)
   {
+#ifdef IGL_EDGE_LENGTHS_SQUARED_H
+    //Hard assert if we have edge_lenght_squared
     ASSERT_EQ(-3.0, L1.coeff(f,f));
     ASSERT_EQ(0.0, L1.row(f).sum());
     ASSERT_EQ(0.0, L1.col(f).sum());
+#else
+    //Soft assert if we have not edge_lenght_squared
+    ASSERT_NEAR(-3.0, L1.coeff(f,f), epsilon);
+    ASSERT_NEAR(0.0, L1.row(f).sum(), epsilon);
+    ASSERT_NEAR(0.0, L1.col(f).sum(), epsilon);
+#endif
+
   }
 
   //Same for huge cube.
@@ -128,8 +137,15 @@ TEST(cotmatrix, tetrahedron)
         ASSERT_NEAR(-3 / tan(M_PI / 3.0), L1.coeff(f,f), epsilon);
     else
         ASSERT_NEAR(0.0, L1.coeff(f,f), epsilon);
+#ifdef IGL_EDGE_LENGTHS_SQUARED_H
+    //Hard assert if we have edge_lenght_squared
     ASSERT_EQ(0.0, L1.row(f).sum());
     ASSERT_EQ(0.0, L1.col(f).sum());
+#else
+    //Soft assert if we have not edge_lenght_squared
+    ASSERT_NEAR(0.0, L1.row(f).sum(), epsilon);
+    ASSERT_NEAR(0.0, L1.col(f).sum(), epsilon);
+#endif
   }
 
   //Check the huge regular tetrahedron
