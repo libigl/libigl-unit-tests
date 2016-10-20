@@ -41,7 +41,6 @@ option(LIBIGL_WITH_NANOGUI     "Use Nanogui menu"   OFF)
 option(LIBIGL_WITH_VIEWER      "Use OpenGL viewer"  OFF)
 option(LIBIGL_WITH_OPENGL      "Use OpenGL"         OFF)
 option(LIBIGL_WITH_GLFW        "Use GLFW"           OFF)
-option(LIBIGL_WITH_BBW         "Use BBW"            OFF)
 option(LIBIGL_WITH_EMBREE      "Use Embree"         OFF)
 option(LIBIGL_WITH_PNG         "Use PNG"            OFF)
 option(LIBIGL_WITH_TETGEN      "Use Tetgen"         OFF)
@@ -80,7 +79,6 @@ set(COMMON_LIBRARIES ${GTEST_BOTH_LIBRARIES} ${LIBIGL_LIBRARIES} ${LIBIGL_EXTRA_
 
 # Process code in each subdirectories: add in decreasing order of complexity
 # (last added will run first and those should be the fastest tests)
-add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/bbw)
 if(LIBIGL_WITH_MOSEK)
   add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/mosek)
 endif()
