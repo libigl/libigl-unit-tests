@@ -2,10 +2,11 @@
 
 #include <vector>
 
-#include <igl/copyleft/boolean/mesh_boolean.h>
-#include <igl/copyleft/boolean/MeshBooleanType.h>
+#include <igl/copyleft/cgal/mesh_boolean.h>
+#include <igl/MeshBooleanType.h>
 #include <igl/exterior_edges.h>
 #include <igl/is_vertex_manifold.h>
+#include <igl/is_edge_manifold.h>
 
 namespace mesh_boolean_test {
 
@@ -24,7 +25,7 @@ namespace mesh_boolean_test {
             const Eigen::PlainObjectBase<DerivedF>& F) {
         Eigen::MatrixXi B;
         ASSERT_TRUE(igl::is_vertex_manifold(F, B));
-        ASSERT_TRUE(igl::is_edge_manifold(V, F));
+        ASSERT_TRUE(igl::is_edge_manifold(F));
     }
 
     template<typename DerivedV, typename DerivedF>
@@ -59,8 +60,8 @@ TEST(MeshBoolean, TwoCubes) {
     Eigen::MatrixXd Vo;
     Eigen::MatrixXi Fo;
 
-    igl::copyleft::boolean::mesh_boolean(V1, F1, V2, F2,
-            igl::copyleft::boolean::MESH_BOOLEAN_TYPE_UNION,
+    igl::copyleft::cgal::mesh_boolean(V1, F1, V2, F2,
+            igl::MESH_BOOLEAN_TYPE_UNION,
             Vo, Fo);
 
     assert_no_exterior_edges(Fo);
@@ -75,8 +76,8 @@ TEST(MeshBoolean, MinusTest) {
     test_common::load_mesh("boolean_minus_test_cube.obj", V1, F1);
     test_common::load_mesh("boolean_minus_test_green.obj", V2, F2);
 
-    igl::copyleft::boolean::mesh_boolean(V1, F1, V2, F2,
-            igl::copyleft::boolean::MESH_BOOLEAN_TYPE_MINUS,
+    igl::copyleft::cgal::mesh_boolean(V1, F1, V2, F2,
+            igl::MESH_BOOLEAN_TYPE_MINUS,
             Vo, Fo);
 
     assert_no_exterior_edges(Fo);
@@ -89,8 +90,8 @@ TEST(MeshBoolean, IntersectWithSelf) {
     Eigen::MatrixXi F1, Fo;
     test_common::load_mesh("cube.obj", V1, F1);
 
-    igl::copyleft::boolean::mesh_boolean(V1, F1, V1, F1,
-            igl::copyleft::boolean::MESH_BOOLEAN_TYPE_INTERSECT,
+    igl::copyleft::cgal::mesh_boolean(V1, F1, V1, F1,
+            igl::MESH_BOOLEAN_TYPE_INTERSECT,
             Vo, Fo);
 
     assert_no_exterior_edges(Fo);

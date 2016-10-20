@@ -48,9 +48,12 @@ option(LIBIGL_WITH_TRIANGLE    "Use Triangle"       OFF)
 option(LIBIGL_WITH_XML         "Use XML"            OFF)
 option(LIBIGL_WITH_LIM         "Use LIM"            OFF)
 option(LIBIGL_WITH_COMISO      "Use CoMiso"         OFF)
-option(LIBIGL_WITH_MATLAB      "Use Matlab"         OFF) # This option is not supported yet
-option(LIBIGL_WITH_MOSEK       "Use MOSEK"          ON ) # This option is not supported yet
-option(LIBIGL_WITH_CGAL        "Use CGAL"           OFF)
+find_package(MATLAB QUIET)
+option(LIBIGL_WITH_MATLAB           "Use Matlab"         "${MATLAB_FOUND}")
+find_package(MOSEK  QUIET)
+option(LIBIGL_WITH_MOSEK            "Use MOSEK"          "${MOSEK_FOUND}")
+find_package(CGAL QUIET)
+option(LIBIGL_WITH_CGAL             "Use CGAL"           "${CGAL_FOUND}")
 if(LIBIGL_WITH_CGAL) # Do not remove or move this block, the cgal build system fails without it
   find_package(CGAL REQUIRED)
   set(CGAL_DONT_OVERRIDE_CMAKE_FLAGS TRUE CACHE BOOL "CGAL's CMAKE Setup is super annoying ")
