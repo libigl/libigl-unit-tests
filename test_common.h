@@ -26,48 +26,58 @@ namespace test_common
   {
     return test_common::safe_test_name(info.param);
   };
-  inline std::vector<std::string> all_meshes()
+  inline std::vector<std::string> closed_manifold_meshes()
   {
-    return std::vector<std::string>(
+    return 
       {
-        "boolean_minus_test_cube.obj",
-        "boolean_minus_test_green.obj",
-        "bunny.off",
         "cube.obj",
-        "elephant.off",
-        "truck.obj"});
+        "decimated-knight.obj",
+        };
   };
   inline std::vector<std::string> manifold_meshes()
   {
-    return std::vector<std::string>(
+    std::vector<std::string> meshes = closed_manifold_meshes();
+    meshes.insert(meshes.end(),
       {
         "boolean_minus_test_cube.obj",
         "boolean_minus_test_green.obj",
         "bunny.off",
-        "cube.obj",
         "elephant.off"});
+    return meshes;
   };
-  inline std::vector<std::string> closed_manifold_meshes()
+  inline std::vector<std::string> all_meshes()
   {
-    return std::vector<std::string>(
+    std::vector<std::string> meshes = manifold_meshes();
+    meshes.insert(meshes.end(),
       {
-        "cube.obj"});
+        "truck.obj"});
+    return meshes;
+  };
+  inline std::string data_path(std::string s)
+  {
+    return std::string(TEST_DIR) + "/data/" + s;
   };
 
+  // TODO: this seems like a pointless indirection. Should just find and
+  // replace test_common::load_mesh(X,...) with
+  // igl::read_triangle_mesh(test_common::data_path(X),...)
   template<typename DerivedV, typename DerivedF>
   void load_mesh(
-          const std::string& filename, 
-          Eigen::PlainObjectBase<DerivedV>& V,
-          Eigen::PlainObjectBase<DerivedF>& F) {
-      auto find_file = [&](const std::string& val) {
-          return std::string(TEST_DIR) + "/data/" + val;
-      };
-      igl::read_triangle_mesh(find_file(filename), V, F);
+    const std::string& filename, 
+    Eigen::PlainObjectBase<DerivedV>& V,
+    Eigen::PlainObjectBase<DerivedF>& F)
+  {
+    igl::read_triangle_mesh(data_path(filename), V, F);
   }
 
+  // TODO: this seems like a pointless indirection. Should just find and
+  // replace test_common::load_matrix(X,...) with
+  // igl::readDMAT(test_common::data_path(X),...)
   template<typename Derived>
-  void load_matrix(const std::string& filename,
-          Eigen::PlainObjectBase<Derived>& M) {
-      igl::readDMAT(std::string(TEST_DIR) + "/data/" + filename, M);
+  void load_matrix(
+    const std::string& filename,
+    Eigen::PlainObjectBase<Derived>& M) 
+  {
+    igl::readDMAT(data_path(filename), M);
   }
 }

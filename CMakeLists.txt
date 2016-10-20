@@ -49,7 +49,7 @@ option(LIBIGL_WITH_XML         "Use XML"            OFF)
 option(LIBIGL_WITH_LIM         "Use LIM"            OFF)
 option(LIBIGL_WITH_COMISO      "Use CoMiso"         OFF)
 option(LIBIGL_WITH_MATLAB      "Use Matlab"         OFF) # This option is not supported yet
-option(LIBIGL_WITH_MOSEK       "Use MOSEK"          OFF) # This option is not supported yet
+option(LIBIGL_WITH_MOSEK       "Use MOSEK"          ON ) # This option is not supported yet
 option(LIBIGL_WITH_CGAL        "Use CGAL"           OFF)
 if(LIBIGL_WITH_CGAL) # Do not remove or move this block, the cgal build system fails without it
   find_package(CGAL REQUIRED)
@@ -73,9 +73,11 @@ include(Settings.cmake)
 # Set up common libraries to link against
 set(COMMON_LIBRARIES ${GTEST_BOTH_LIBRARIES} ${LIBIGL_LIBRARIES} ${LIBIGL_EXTRA_LIBRARIES})
 
-# Process code in each subdirectories
-add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl)
+# Process code in each subdirectories: add in decreasing order of complexity
+# (last added will run first and those should be the fastest tests)
+add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/bbw)
 if(CGAL_FOUND)
   add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/copyleft/boolean)
   add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl/copyleft/cgal)
 endif(CGAL_FOUND)
+add_subdirectory(${PROJECT_SOURCE_DIR}/include/igl)
