@@ -6,6 +6,7 @@
 #include <igl/MeshBooleanType.h>
 #include <igl/exterior_edges.h>
 #include <igl/is_vertex_manifold.h>
+#include <igl/unique_edge_map.h>
 #include <igl/is_edge_manifold.h>
 
 namespace mesh_boolean_test {
