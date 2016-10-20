@@ -11,7 +11,7 @@
 
 #include <CGAL/Exact_predicates_exact_constructions_kernel.h>
 
-TEST(PeelOuterHullLayers, TwoCubes) {
+TEST(copyleft_cgal_peel_outer_hull_layers, TwoCubes) {
     Eigen::MatrixXd V;
     Eigen::MatrixXi F;
     test_common::load_mesh("two-boxes-bad-self-union.ply", V, F);

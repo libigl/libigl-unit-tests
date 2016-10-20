@@ -3,9 +3,9 @@
 #include <igl/readMESH.h>
 #include <igl/writeDMAT.h>
 #include <igl/readTGF.h>
-#include <igl/bbw/bbw.h>
+#include <igl/mosek/bbw.h>
 
-TEST(bbw_bbw, decimated_knight)
+TEST(mosek_bbw, decimated_knight)
 {
   Eigen::MatrixXd V,C;
   Eigen::MatrixXi T,F,E;
@@ -17,17 +17,10 @@ TEST(bbw_bbw, decimated_knight)
   Eigen::VectorXi b;
   Eigen::MatrixXd bc;
   igl::boundary_conditions(V,T,C,Eigen::VectorXi(),E,Eigen::MatrixXi(),b,bc);
-  igl::bbw::BBWData params;
-  params.qp_solver = igl::bbw::QP_SOLVER_IGL_ACTIVE_SET;
-  params.active_set_params.max_iter = 100;
-  igl::bbw::bbw(V,T,b,bc,params,Was);
-  igl::writeDMAT("decimated-knight-as.dmat",Was);
-  ASSERT_LT( (Was-W_groundtruth).array().abs().maxCoeff() ,1e-4);
-#ifndef IGL_NO_MOSEK
-  params.qp_solver = igl::bbw::QP_SOLVER_MOSEK;
-  igl::bbw::bbw(V,T,b,bc,params,Wmo);
+  igl::BBWData params;
+  igl::mosek::MosekData mosek_params;
+  igl::mosek::bbw(V,T,b,bc,params,mosek_params,Wmo);
   igl::writeDMAT("decimated-knight-mo.dmat",Wmo);
   // Mosek is less accurate
   ASSERT_LT( (Wmo-W_groundtruth).array().abs().maxCoeff() ,1e-3);
-#endif
 }

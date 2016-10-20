@@ -77,7 +77,7 @@ void assert_order(
     }
 }
 
-TEST(OrderFacetsAroundEdges, Simple) {
+TEST(copyleft_cgal_order_facets_around_edges, Simple) {
     Eigen::MatrixXd V(4, 3);
     V << 0.0, 0.0, 0.0,
          1.0, 0.0, 0.0,
@@ -90,7 +90,7 @@ TEST(OrderFacetsAroundEdges, Simple) {
     assert_order(V, F, 1, 2, {0, 1});
 }
 
-TEST(OrderFacetsAroundEdges, TripletFaces) {
+TEST(copyleft_cgal_order_facets_around_edges, TripletFaces) {
     Eigen::MatrixXd V(5, 3);
     V << 0.0, 0.0, 0.0,
          1.0, 0.0, 0.0,
@@ -105,7 +105,7 @@ TEST(OrderFacetsAroundEdges, TripletFaces) {
     assert_order(V, F, 1, 2, {0, 1, 2});
 }
 
-TEST(OrderFacetsAroundEdges, DuplicatedFaces) {
+TEST(copyleft_cgal_order_facets_around_edges, DuplicatedFaces) {
     Eigen::MatrixXd V(5, 3);
     V << 0.0, 0.0, 0.0,
          1.0, 0.0, 0.0,
@@ -121,7 +121,7 @@ TEST(OrderFacetsAroundEdges, DuplicatedFaces) {
     assert_order(V, F, 1, 2, {0, 1, 3, 2});
 }
 
-TEST(OrderFacetsAroundEdges, MultipleDuplicatedFaces) {
+TEST(copyleft_cgal_order_facets_around_edges, MultipleDuplicatedFaces) {
     Eigen::MatrixXd V(5, 3);
     V << 0.0, 0.0, 0.0,
          1.0, 0.0, 0.0,
@@ -139,7 +139,7 @@ TEST(OrderFacetsAroundEdges, MultipleDuplicatedFaces) {
     assert_order(V, F, 1, 2, {1, 0, 2, 3, 5, 4});
 }
 
-TEST(OrderFacetsAroundEdges, Debug) {
+TEST(copyleft_cgal_order_facets_around_edges, Debug) {
     Eigen::MatrixXd V(5, 3);
     V <<
         -44.3205080756887781, 4.22994972382184579e-15, 75,
@@ -156,7 +156,7 @@ TEST(OrderFacetsAroundEdges, Debug) {
     assert_order(V, F, 1, 2, {0, 2, 1});
 }
 
-TEST(OrderFacetsAroundEdges, Debug2) {
+TEST(copyleft_cgal_order_facets_around_edges, Debug2) {
     Eigen::MatrixXd V(5, 3);
     V <<
         -22.160254037844382, 38.3826859021798441, 75,
@@ -172,7 +172,7 @@ TEST(OrderFacetsAroundEdges, Debug2) {
     assert_order(V, F, 1, 2, {1, 0, 2});
 }
 
-TEST(OrderFacetsAroundEdges, NormalSensitivity) {
+TEST(copyleft_cgal_order_facets_around_edges, NormalSensitivity) {
     // This example shows that epsilon difference in normal vectors could
     // results in very different ordering of facets.
 
