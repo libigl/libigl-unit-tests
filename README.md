@@ -113,3 +113,12 @@ TEST(copyleft_cgal_order_facets_around_edges, TripletFaces)
 ```
 
 which tests this function on example data containing a triplet of faces.
+
+## Guarantees
+
+None.
+
+(Obviously?) The presence of a unit test here for some function (e.g.,
+`igl::cotmatrix`) is not a guarantee or even an endorsement of the notion that
+the libigl function `igl::cotmatrix` is bug free or "fully tested" or "heavily
+tested" or even "adequately tested".
