@@ -1,6 +1,6 @@
 #include <test_common.h>
 
-#include <igl/cgal/outer_facet.h>
+#include <igl/copyleft/cgal/outer_facet.h>
 
 namespace OuterFacetHelper {
 
@@ -28,7 +28,7 @@ TEST(OuterFacet, Simple) {
 
     size_t fid = num_faces + 1;
     bool flipped;
-    igl::cgal::outer_facet(V, F, I, fid, flipped);
+    igl::copyleft::cgal::outer_facet(V, F, I, fid, flipped);
 
     ASSERT_LT(fid, num_faces);
     ASSERT_FALSE(flipped);
@@ -50,7 +50,7 @@ TEST(OuterFacet, DuplicatedOppositeFaces) {
 
     size_t fid = F.rows() + 1;
     bool flipped;
-    igl::cgal::outer_facet(V, F, I, fid, flipped);
+    igl::copyleft::cgal::outer_facet(V, F, I, fid, flipped);
 
     ASSERT_LT(fid, F.rows());
     ASSERT_FALSE(flipped);
@@ -66,7 +66,7 @@ TEST(OuterFacet, FullyDegnerated) {
 
     size_t fid = F.rows() + 1;
     bool flipped;
-    igl::cgal::outer_facet(V, F, I, fid, flipped);
+    igl::copyleft::cgal::outer_facet(V, F, I, fid, flipped);
 
     ASSERT_LT(fid, F.rows());
     ASSERT_FALSE(flipped);
@@ -83,7 +83,7 @@ TEST(OuterFacet, InvertedNormal) {
 
     size_t fid = F.rows() + 1;
     bool flipped;
-    igl::cgal::outer_facet(V, F, I, fid, flipped);
+    igl::copyleft::cgal::outer_facet(V, F, I, fid, flipped);
 
     ASSERT_LT(fid, F.rows());
     ASSERT_TRUE(flipped);
@@ -99,7 +99,7 @@ TEST(OuterFacet, SliverTet) {
 
     size_t fid = F.rows() + 1;
     bool flipped;
-    igl::cgal::outer_facet(V, F, I, fid, flipped);
+    igl::copyleft::cgal::outer_facet(V, F, I, fid, flipped);
 
     ASSERT_LT(fid, F.rows());
     ASSERT_FALSE(flipped);

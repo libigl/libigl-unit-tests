@@ -1,6 +1,6 @@
 #include <test_common.h>
 
-#include <igl/cgal/points_inside_component.h>
+#include <igl/copyleft/cgal/points_inside_component.h>
 #include <limits>
 
 namespace PointInsideComponentHelper {
@@ -17,7 +17,7 @@ TEST(PointInsideComponent, simple) {
          0.0, 0.0, 1.0;
     Eigen::VectorXi inside;
 
-    EXPECT_NO_THROW(igl::cgal::points_inside_component(V1, F1, P, inside));
+    EXPECT_NO_THROW(igl::copyleft::cgal::points_inside_component(V1, F1, P, inside));
     ASSERT_EQ(1, inside[0]);
     ASSERT_EQ(0, inside[1]);
     ASSERT_EQ(0, inside[2]);
@@ -39,7 +39,7 @@ TEST(PointInsideComponent, near_boundary) {
          0.0, 0.0, 0.5 - EPS;
 
     Eigen::VectorXi inside;
-    EXPECT_NO_THROW(igl::cgal::points_inside_component(V1, F1, P, inside));
+    EXPECT_NO_THROW(igl::copyleft::cgal::points_inside_component(V1, F1, P, inside));
     ASSERT_EQ(0, inside[0]);
     ASSERT_EQ(0, inside[1]);
     ASSERT_EQ(0, inside[2]);
@@ -65,7 +65,7 @@ TEST(PointInsideComponent, near_corner) {
             -0.5 - EPS,-0.5 - EPS,-0.5 - EPS;
 
     Eigen::VectorXi inside;
-    EXPECT_NO_THROW(igl::cgal::points_inside_component(V1, F1, P_out, inside));
+    EXPECT_NO_THROW(igl::copyleft::cgal::points_inside_component(V1, F1, P_out, inside));
     ASSERT_TRUE((inside.array()==0).all());
 
     Eigen::MatrixXd P_in(8, 3);
@@ -77,7 +77,7 @@ TEST(PointInsideComponent, near_corner) {
            -0.5 + EPS, 0.5 - EPS,-0.5 + EPS,
             0.5 - EPS,-0.5 + EPS,-0.5 + EPS,
            -0.5 + EPS,-0.5 + EPS,-0.5 + EPS;
-    EXPECT_NO_THROW(igl::cgal::points_inside_component(V1, F1, P_in, inside));
+    EXPECT_NO_THROW(igl::copyleft::cgal::points_inside_component(V1, F1, P_in, inside));
     ASSERT_TRUE((inside.array()==1).all());
 }
 
