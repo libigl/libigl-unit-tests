@@ -96,8 +96,8 @@ namespace test_common
       {
         // Create an ijv tuple to trick GoogleTest into printing (i,j) so we
         // know where the disagreement is.
-        std::tuple<int,int,typename DerivedA::Scalar> Aijv ({i,j,A(i,j)});
-        std::tuple<int,int,typename DerivedB::Scalar> Bijv ({i,j,B(i,j)});
+        std::tuple<int,int,typename DerivedA::Scalar> Aijv {i,j,A(i,j)};
+        std::tuple<int,int,typename DerivedB::Scalar> Bijv {i,j,B(i,j)};
         ASSERT_EQ(Aijv,Bijv);
       }
     }
@@ -139,8 +139,8 @@ namespace test_common
       {
         // Create an ijv tuple to trick GoogleTest into printing (i,j) so we
         // know where the disagreement is.
-        std::tuple<int,int,typename DerivedA::Scalar> Aijv ({i,j,A(i,j)});
-        std::tuple<int,int,typename DerivedB::Scalar> Bijv ({i,j,B(i,j)});
+        std::tuple<int,int,typename DerivedA::Scalar> Aijv {i,j,A(i,j)};
+        std::tuple<int,int,typename DerivedB::Scalar> Bijv {i,j,B(i,j)};
         ASSERT_NEAR(Aijv,Bijv,eps);
       }
     }
