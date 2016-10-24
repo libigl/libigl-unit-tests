@@ -28,13 +28,13 @@ TEST(edge_lengths, simple)
             1,6,3;
 
 
-#ifdef IGL_EDGE_LENGTHS_SQUARED_H
+#ifdef IGL_SQUARED_EDGE_LENGTHS_H
 
   //1. Check edge_lengths_squared function
   double side_sq = 1.0; //squared lenght of a side
   double diag_sq = 2.0; //squared lenght of a diagonal
   Eigen::MatrixXd L_sq;
-  igl::edge_lengths_squared(V,F,L_sq);
+  igl::squared_edge_lengths(V,F,L_sq);
   ASSERT_EQ(F.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   //All edges in unit cube measure 1.0 or sqrt(2) in diagonals
@@ -51,7 +51,7 @@ TEST(edge_lengths, simple)
   }
 
   //Check the regular tetrahedron
-  igl::edge_lengths_squared(V,F_tet,L_sq);
+  igl::squared_edge_lengths(V,F_tet,L_sq);
   ASSERT_EQ(F_tet.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   //All edges measure sqrt(2)
@@ -66,7 +66,7 @@ TEST(edge_lengths, simple)
   //Scale the cube to have huge sides
   side_sq = huge_scale * huge_scale;  //squared lenght of a side
   diag_sq = 2.0 * side_sq;  //squared lenght of a diagonal
-  igl::edge_lengths_squared(V_huge,F,L_sq);
+  igl::squared_edge_lengths(V_huge,F,L_sq);
   ASSERT_EQ(F.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   for(int f = 0;f<L_sq.rows();f++)
@@ -82,7 +82,7 @@ TEST(edge_lengths, simple)
   }
  
   //Check the equilateral triangles
-  igl::edge_lengths_squared(V_huge,F_tet,L_sq);
+  igl::squared_edge_lengths(V_huge,F_tet,L_sq);
   ASSERT_EQ(F_tet.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   //All edges measure sqrt(2)
@@ -96,7 +96,7 @@ TEST(edge_lengths, simple)
   //Scale the cube to have tiny sides
   side_sq = tiny_scale * tiny_scale;  //squared lenght of a side
   diag_sq = 2.0 * side_sq;  //squared lenght of a diagonal
-  igl::edge_lengths_squared(V_tiny,F,L_sq);
+  igl::squared_edge_lengths(V_tiny,F,L_sq);
   ASSERT_EQ(F.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   for(int f = 0;f<L_sq.rows();f++)
@@ -112,7 +112,7 @@ TEST(edge_lengths, simple)
   }
 
   //Check the regular tetrahedron
-  igl::edge_lengths_squared(V_tiny,F_tet,L_sq);
+  igl::squared_edge_lengths(V_tiny,F_tet,L_sq);
   ASSERT_EQ(F_tet.rows(), L_sq.rows());
   ASSERT_EQ(3, L_sq.cols());
   //All edges measure sqrt(2)
