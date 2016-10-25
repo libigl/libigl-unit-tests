@@ -54,6 +54,7 @@ namespace test_common
     {
       "bunny.off",
       "elephant.off",
+      "hemisphere.obj",
     });
     return meshes;
   };
@@ -150,9 +151,18 @@ namespace test_common
       {
         // Create an ijv tuple to trick GoogleTest into printing (i,j) so we
         // know where the disagreement is.
-        std::tuple<int,int,typename DerivedA::Scalar> Aijv {i,j,A(i,j)};
-        std::tuple<int,int,typename DerivedB::Scalar> Bijv {i,j,B(i,j)};
-        ASSERT_NEAR(Aijv,Bijv,eps);
+        //
+        // Equivalent to ASSERT_NEAR(Aijv,Bijv)
+        {
+          std::tuple<int,int,typename DerivedA::Scalar> Aijv {i,j,A(i,j)};
+          std::tuple<int,int,typename DerivedB::Scalar> Bijv {i,j,B(i,j)+eps};
+          ASSERT_LT(Aijv,Bijv);
+        }
+        {
+          std::tuple<int,int,typename DerivedA::Scalar> Aijv {i,j,A(i,j)+eps};
+          std::tuple<int,int,typename DerivedB::Scalar> Bijv {i,j,B(i,j)};
+          ASSERT_GT(Aijv,Bijv);
+        }
       }
     }
   }

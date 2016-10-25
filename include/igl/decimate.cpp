@@ -2,8 +2,43 @@
 #include <igl/decimate.h>
 #include <igl/sort.h>
 #include <igl/sortrows.h>
+#include <igl/normalize_row_lengths.h>
+#include <igl/slice.h>
+#include <igl/matlab_format.h>
+#include <iostream>
 
 class decimate : public ::testing::TestWithParam<std::string> {};
+
+TEST(decimate,hemisphere)
+{
+  // Load a hemisphere centered at the origin. For each original vertex compute
+  // its "perfect normal" (i.e., its position treated as unit vectors).
+  // Decimate the model and using the birth indices of the output vertices grab
+  // their original "perfect normals" and compare them to their current
+  // positions treated as unit vectors. If vertices have not moved much, then
+  // these should be similar (mostly this is checking if the birth indices are
+  // sane).
+  Eigen::MatrixXd V,U;
+  Eigen::MatrixXi F,G;
+  Eigen::VectorXi J,I;
+  // Load example mesh: GetParam() will be name of mesh file
+  test_common::load_mesh("hemisphere.obj", V, F);
+  // Perfect normals from positions
+  Eigen::MatrixXd NV = V.rowwise().normalized();
+  // Remove half of the faces
+  igl::decimate(V,F,F.rows()/2,U,G,J,I);
+  // Expect that all normals still point in same direction as original
+  Eigen::MatrixXd NU = U.rowwise().normalized();
+  Eigen::MatrixXd NVI;
+  igl::slice(NV,I,1,NVI);
+  ASSERT_EQ(NVI.rows(),NU.rows());
+  ASSERT_EQ(NVI.cols(),NU.cols());
+  // Dot product
+  Eigen::VectorXd D = (NU.array()*NVI.array()).rowwise().sum();
+  Eigen::VectorXd O = Eigen::VectorXd::Ones(D.rows());
+  // 0.2 chosen to succeed on 256 face hemisphere.obj reduced to 128 faces
+  test_common::assert_near(D,O,0.02);
+}
 
 TEST_P(decimate, closed)
 {
