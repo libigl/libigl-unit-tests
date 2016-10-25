@@ -28,31 +28,42 @@ namespace test_common
   {
     return test_common::safe_test_name(info.param);
   };
-  inline std::vector<std::string> closed_manifold_meshes()
+  inline std::vector<std::string> closed_genus_0_meshes()
   {
     return 
-      {
-        "cube.obj",
-        "decimated-knight.obj",
-        };
+    {
+      "cube.obj",
+      "decimated-knight.obj",
+      "boolean_minus_test_cube.obj",
+      "boolean_minus_test_green.obj",
+    };
+  };
+  inline std::vector<std::string> closed_manifold_meshes()
+  {
+    std::vector<std::string> meshes = closed_genus_0_meshes();
+    meshes.insert(meshes.end(),
+    {
+      "TinyTorus.obj",
+    });
+    return meshes;
   };
   inline std::vector<std::string> manifold_meshes()
   {
     std::vector<std::string> meshes = closed_manifold_meshes();
     meshes.insert(meshes.end(),
-      {
-        "boolean_minus_test_cube.obj",
-        "boolean_minus_test_green.obj",
-        "bunny.off",
-        "elephant.off"});
+    {
+      "bunny.off",
+      "elephant.off",
+    });
     return meshes;
   };
   inline std::vector<std::string> all_meshes()
   {
     std::vector<std::string> meshes = manifold_meshes();
     meshes.insert(meshes.end(),
-      {
-        "truck.obj"});
+    {
+      "truck.obj",
+    });
     return meshes;
   };
   inline std::string data_path(std::string s)

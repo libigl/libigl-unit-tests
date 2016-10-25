@@ -28,7 +28,6 @@ TEST_P($name, change_to_meaningful_name)
 {
   Eigen::MatrixXd V;
   Eigen::MatrixXi F;
-  Eigen::SparseMatrix<double> L;
   // Load example mesh: GetParam() will be name of mesh file
   test_common::load_mesh(GetParam(), V, F);
   // ASSERT_EQ(a,b);
@@ -39,9 +38,9 @@ TEST_P($name, change_to_meaningful_name)
 
 INSTANTIATE_TEST_CASE_P
 (
- all_meshes,
- $name,
- ::testing::ValuesIn(test_common::all_meshes()),
- test_common::string_test_name
+  all_meshes,
+  $name,
+  ::testing::ValuesIn(test_common::all_meshes()),
+  test_common::string_test_name
 );" > $cpp
 fi
