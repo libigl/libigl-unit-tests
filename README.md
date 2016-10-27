@@ -122,3 +122,13 @@ None.
 `igl::cotmatrix`) is not a guarantee or even an endorsement of the notion that
 the libigl function `igl::cotmatrix` is bug free or "fully tested" or "heavily
 tested" or even "adequately tested".
+
+## Need work?
+
+Some of the most used libigl functions
+
+```bash
+grep -hr "^#include \"" ../libigl/ | sed -e 's/\(\.\.\/\)//g' | sort | uniq -c | sort
+```
+
+still don't have unit tests.
