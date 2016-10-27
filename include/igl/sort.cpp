@@ -1,22 +1,25 @@
 #include <test_common.h>
 #include <igl/sort.h>
 #include <igl/STR.h>
+#include <tuple>
 
-typedef std::tuple<int/*n*/,int/*m*/,int/*dim*/,bool/*ascending*/>
-  NMDimAscending;
-class sort : public ::testing::TestWithParam<NMDimAscending> {};
-
-inline std::string NMDimAscending_test_name(
-  const ::testing::TestParamInfo<NMDimAscending>& info)
+namespace sort
 {
-  return STR(
-    std::get<0>(info.param)<<"x"<<
-    std::get<1>(info.param)<<"_"<<
-    "dim_"<<std::get<2>(info.param)<<"_"<<
-    "ascending_"<<(std::get<3>(info.param)?"true":"false"));
-};
+  typedef std::tuple<int/*n*/,int/*m*/,int/*dim*/,bool/*ascending*/>
+    NMDimAscending;
+  inline std::string NMDimAscending_test_name(
+    const ::testing::TestParamInfo<NMDimAscending>& info)
+  {
+    return STR(
+      std::get<0>(info.param)<<"x"<<
+      std::get<1>(info.param)<<"_"<<
+      "dim_"<<std::get<2>(info.param)<<"_"<<
+      "ascending_"<<(std::get<3>(info.param)?"true":"false"));
+  };
+}
+class SortTest : public ::testing::TestWithParam<sort::NMDimAscending> {};
 
-TEST_P(sort,random)
+TEST_P(SortTest,random)
 {
   const int n = std::get<0>(GetParam());
   const int m = std::get<1>(GetParam());
@@ -55,33 +58,33 @@ TEST_P(sort,random)
 
 INSTANTIATE_TEST_CASE_P
 (
- suite,
- sort,
- ::testing::ValuesIn<std::vector<NMDimAscending> >({
-   {100,3,1,true},
-   {100,3,2,true},
-   {100,3,1,false},
-   {100,3,2,false},
-   {3,100,1,true},
-   {3,100,2,true},
-   {3,100,1,false},
-   {3,100,2,false},
-   {100,2,1,true},
-   {100,2,2,true},
-   {100,2,1,false},
-   {100,2,2,false},
-   {2,100,1,true},
-   {2,100,2,true},
-   {2,100,1,false},
-   {2,100,2,false},
-   {100,4,1,true},
-   {100,4,2,true},
-   {100,4,1,false},
-   {100,4,2,false},
-   {4,100,1,true},
-   {4,100,2,true},
-   {4,100,1,false},
-   {4,100,2,false},
-   }),
- NMDimAscending_test_name
+  suite,
+  SortTest,
+  ::testing::ValuesIn<std::vector<sort::NMDimAscending> >({
+    {100,3,1,true},
+    {100,3,2,true},
+    {100,3,1,false},
+    {100,3,2,false},
+    {3,100,1,true},
+    {3,100,2,true},
+    {3,100,1,false},
+    {3,100,2,false},
+    {100,2,1,true},
+    {100,2,2,true},
+    {100,2,1,false},
+    {100,2,2,false},
+    {2,100,1,true},
+    {2,100,2,true},
+    {2,100,1,false},
+    {2,100,2,false},
+    {100,4,1,true},
+    {100,4,2,true},
+    {100,4,1,false},
+    {100,4,2,false},
+    {4,100,1,true},
+    {4,100,2,true},
+    {4,100,1,false},
+    {4,100,2,false},
+    }),
+  sort::NMDimAscending_test_name
 );
