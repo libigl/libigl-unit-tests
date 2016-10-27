@@ -33,18 +33,21 @@ TEST(boundary_loop, bunny)
   //Compare our result with known results taken from meshlab
   ASSERT_EQ(5, boundaries.size());
 
-  std::vector<unsigned> b_sizes;
-  unsigned boundaryLength=0;
-  for(const auto &b : boundaries)
+  //Compute min, max and sum of boundaries
+  size_t boundaryMin=9999999;
+  size_t boundaryMax=0;
+  size_t boundarySum=0;
+  for(size_t i=0; i<boundaries.size(); i++)
   {
-      b_sizes.push_back(b.size());
-      boundaryLength += b.size();
+      boundarySum += boundaries[i].size();
+      boundaryMax = std::max(boundaryMax, boundaries[i].size());
+      boundaryMin = std::min(boundaryMin, boundaries[i].size());
   }
 
   //Total boundary has 223 vertex
-  ASSERT_EQ(223, boundaryLength);
+  ASSERT_EQ(223, boundarySum);
   //Largest loop has 80 vertex
-  ASSERT_EQ(80, *std::max_element(b_sizes.begin(), b_sizes.end()));
+  ASSERT_EQ(80, boundaryMax);
   //Smallest loop has 22 vertex
-  ASSERT_EQ(22, *std::min_element(b_sizes.begin(), b_sizes.end()));
+  ASSERT_EQ(22, boundaryMin);
 }
