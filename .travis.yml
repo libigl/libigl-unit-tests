@@ -12,11 +12,11 @@ matrix:
         - git clone --recursive https://github.com/libigl/libigl.git
         - mkdir build-header
         - cd build-header
-        - cmake ../
-        - make -j 2
+        - cmake ../ -DLIBIGL_WITH_CGAL=OFF
+        - make -j 2 
         - cd ..
         - mkdir build-static
         - cd build-static
-        - cmake -DLIBIGL_USE_STATIC_LIBRARY=ON ../
+        - cmake -DLIBIGL_USE_STATIC_LIBRARY=ON ../ -DLIBIGL_WITH_CGAL=OFF
         - make -j 2
 
