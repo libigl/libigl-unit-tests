@@ -26,7 +26,7 @@ TEST(boundary_loop, bunny)
   //Load the Stanford bunny
   test_common::load_mesh("bunny.off", V, F);
 
-  // Compute list of ordered boundary loops for a manifold mesh.
+  //Compute list of ordered boundary loops for a manifold mesh
   std::vector<std::vector<int> >boundaries;
   igl::boundary_loop(F, boundaries);
 
