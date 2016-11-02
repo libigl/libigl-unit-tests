@@ -12,7 +12,7 @@ TEST(boundary_loop, cube)
   test_common::load_mesh("cube.off", V, F);
 
   //Compute Boundary Loop
-  Eigen::RowVectorXi boundary;
+  Eigen::VectorXi boundary;
   igl::boundary_loop(F, boundary);
 
   //The cube has no boundary
