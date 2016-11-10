@@ -96,8 +96,8 @@ namespace test_common
   }
   template <typename DerivedA, typename DerivedB>
   void assert_eq(
-    const Eigen::PlainObjectBase<DerivedA> & A,
-    const Eigen::PlainObjectBase<DerivedB> & B)
+    const Eigen::MatrixBase<DerivedA> & A,
+    const Eigen::MatrixBase<DerivedB> & B)
   {
     // Sizes should match
     ASSERT_EQ(A.rows(),B.rows());
@@ -138,8 +138,8 @@ namespace test_common
 
   template <typename DerivedA, typename DerivedB, typename EpsType>
   void assert_near(
-    const Eigen::PlainObjectBase<DerivedA> & A,
-    const Eigen::PlainObjectBase<DerivedB> & B,
+    const Eigen::MatrixBase<DerivedA> & A,
+    const Eigen::MatrixBase<DerivedB> & B,
     const EpsType & eps)
   {
     // Sizes should match
