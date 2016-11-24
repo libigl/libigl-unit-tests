@@ -128,7 +128,7 @@ tested" or even "adequately tested".
 Some of the most used libigl functions
 
 ```bash
-grep -hr "^#include \"" ../libigl/ | sed -e 's/\(\.\.\/\)//g' | sort | uniq -c | sort
+grep -hr "^#include \"" ../libigl/include/igl | sed -e 's/\(\.\.\/\)//g' | sort | uniq -c | sort
 ```
 
 still don't have unit tests.
