@@ -60,7 +60,8 @@ INSTANTIATE_TEST_CASE_P
 (
   suite,
   SortTest,
-  ::testing::ValuesIn<std::vector<sort::NMDimAscending> >({
+  ::testing::ValuesIn<std::vector<sort::NMDimAscending> >(
+    std::vector<sort::NMDimAscending> {
     {100,3,1,true},
     {100,3,2,true},
     {100,3,1,false},
