@@ -1,12 +1,13 @@
 #include <test_common.h>
 #include <igl/slice.h>
+#include <igl/LinSpaced.h>
 
 TEST(slice, dense_identity)
 {
   // https://en.wikipedia.org/wiki/Monkey_testing
   Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-  Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-  Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+  Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+  Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
   {
     Eigen::MatrixXd B;
     igl::slice(A,I,J,B);
@@ -27,8 +28,8 @@ TEST(slice, dense_identity)
 TEST(slice, sparse_identity)
 {
   Eigen::SparseMatrix<double> A = Eigen::MatrixXd::Random(10,9).sparseView();
-  Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-  Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+  Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+  Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
   {
     Eigen::SparseMatrix<double> B;
     igl::slice(A,I,J,B);
@@ -50,8 +51,8 @@ TEST(slice,density_reverse)
 {
   {
     Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-    Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),A.rows()-1,0);
-    Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+    Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),A.rows()-1,0);
+    Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
     Eigen::MatrixXd B;
     igl::slice(A,I,J,B);
     // reverse rows (i.e., reverse each column vector)
@@ -60,8 +61,8 @@ TEST(slice,density_reverse)
   }
   {
     Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-    Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-    Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),A.cols()-1,0);
+    Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+    Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),A.cols()-1,0);
     Eigen::MatrixXd B;
     igl::slice(A,I,J,B);
     // reverse cols (i.e., reverse each row vector)

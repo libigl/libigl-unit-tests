@@ -1,11 +1,12 @@
 #include <test_common.h>
 #include <igl/slice_into.h>
+#include <igl/LinSpaced.h>
 
 TEST(slice_into, dense_identity)
 {
   Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-  Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-  Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+  Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+  Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
   {
     Eigen::MatrixXd B(I.maxCoeff()+1,J.maxCoeff()+1);
     igl::slice_into(A,I,J,B);
@@ -27,8 +28,8 @@ TEST(slice_into,density_reverse)
 {
   {
     Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-    Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),A.rows()-1,0);
-    Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+    Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),A.rows()-1,0);
+    Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
     Eigen::MatrixXd B(I.maxCoeff()+1,J.maxCoeff()+1);
     igl::slice_into(A,I,J,B);
     // reverse rows (i.e., reverse each column vector)
@@ -37,8 +38,8 @@ TEST(slice_into,density_reverse)
   }
   {
     Eigen::MatrixXd A = Eigen::MatrixXd::Random(10,9);
-    Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-    Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),A.cols()-1,0);
+    Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+    Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),A.cols()-1,0);
     Eigen::MatrixXd B(I.maxCoeff()+1,J.maxCoeff()+1);
     igl::slice_into(A,I,J,B);
     // reverse cols (i.e., reverse each row vector)
@@ -51,8 +52,8 @@ TEST(slice_into,density_reverse)
 TEST(slice_into, sparse_identity)
 {
   Eigen::SparseMatrix<double> A = Eigen::MatrixXd::Random(10,9).sparseView();
-  Eigen::VectorXi I = Eigen::VectorXi::LinSpaced(A.rows(),0,A.rows()-1);
-  Eigen::VectorXi J = Eigen::VectorXi::LinSpaced(A.cols(),0,A.cols()-1);
+  Eigen::VectorXi I = igl::LinSpaced<Eigen::VectorXi >(A.rows(),0,A.rows()-1);
+  Eigen::VectorXi J = igl::LinSpaced<Eigen::VectorXi >(A.cols(),0,A.cols()-1);
   {
     Eigen::SparseMatrix<double> B(I.maxCoeff()+1,J.maxCoeff()+1);
     igl::slice_into(A,I,J,B);
