@@ -12,4 +12,4 @@ file(GLOB TEST_INC_FILES *.h *.inl)
 
 add_executable(igl_boolean_tests ${TEST_SRC_FILES} ${TEST_INC_FILES})
 target_link_libraries(igl_boolean_tests ${COMMON_LIBRARIES} ${CGAL_LIBRARIES})
-add_custom_command(TARGET igl_boolean_tests POST_BUILD COMMAND igl_boolean_tests)
+add_custom_target(run_igl_boolean_tests ALL igl_boolean_tests DEPENDS igl_boolean_tests)
