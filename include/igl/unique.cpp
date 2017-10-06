@@ -1,5 +1,5 @@
 #include <test_common.h>
-#include <igl/unique.h>
+#include <igl/unique_rows.h>
 #include <igl/matrix_to_list.h>
 
 TEST(unique,matrix)
@@ -7,7 +7,7 @@ TEST(unique,matrix)
   Eigen::VectorXi A(12);
   A = (Eigen::VectorXd::Random(A.size(),1).array().abs()*9).cast<int>();
   Eigen::VectorXi C,IA,IC;
-  igl::unique(A,C,IA,IC);
+  igl::unique_rows(A,C,IA,IC);
   std::vector<bool> inA(A.maxCoeff()+1,false);
   for(int i = 0;i<A.size();i++)
   {

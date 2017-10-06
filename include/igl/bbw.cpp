@@ -1,3 +1,4 @@
+#include <gtest/gtest.h>
 #include <test_common.h>
 #include <igl/boundary_conditions.h>
 #include <igl/readMESH.h>
