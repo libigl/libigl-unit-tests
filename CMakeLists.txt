@@ -26,8 +26,16 @@ option(LIBIGL_WITH_LIM         "Use LIM"            OFF)
 option(LIBIGL_WITH_COMISO      "Use CoMiso"         OFF)
 find_package(LIBIGL REQUIRED QUIET)
 
-# Prepare the build environment
-include(Settings.cmake)
+# Set TEST_DIR definition
+add_definitions(-DTEST_DIR="${PROJECT_SOURCE_DIR}")
+
+# Include current directory
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+
+# Add googletest googlemock support
+enable_testing()
+add_subdirectory(${PROJECT_SOURCE_DIR}/external/googletest/googlemock
+    ${CMAKE_CURRENT_BINARY_DIR}/gtest)
 
 # Process code in each subdirectories: add in decreasing order of complexity
 # (last added will run first and those should be the fastest tests)
