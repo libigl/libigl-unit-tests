@@ -21,3 +21,4 @@ matrix:
         - cmake -DLIBIGL_USE_STATIC_LIBRARY=ON ../ -DLIBIGL_WITH_CGAL=OFF
         - make -j 2
         - make test
+
