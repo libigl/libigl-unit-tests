@@ -9,7 +9,7 @@ matrix:
         # - brew upgrade cmake
         # - brew upgrade cgal
         - git submodule update --init --recursive
-        - git clone --recursive -b cmake https://github.com/libigl/libigl.git
+        - git clone --recursive https://github.com/libigl/libigl.git
         - mkdir build-header
         - cd build-header
         - cmake ../ -DLIBIGL_WITH_CGAL=OFF
