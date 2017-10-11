@@ -9,7 +9,7 @@ matrix:
         # - brew upgrade cmake
         # - brew upgrade cgal
         - git submodule update --init --recursive
-        - git clone --recursive -b cmake https://github.com/jdumas/libigl.git
+        - git clone --recursive -b cmake https://github.com/libigl/libigl.git
         - mkdir build-header
         - cd build-header
         - cmake ../ -DLIBIGL_WITH_CGAL=OFF
@@ -21,4 +21,3 @@ matrix:
         - cmake -DLIBIGL_USE_STATIC_LIBRARY=ON ../ -DLIBIGL_WITH_CGAL=OFF
         - make -j 2
         - make test
-
