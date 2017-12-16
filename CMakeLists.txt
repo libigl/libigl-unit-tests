@@ -36,6 +36,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 enable_testing()
 add_subdirectory(${PROJECT_SOURCE_DIR}/external/googletest/googlemock
     ${CMAKE_CURRENT_BINARY_DIR}/gtest)
+set(GTEST_BOTH_LIBRARIES gtest gmock)
+include_directories(${gmock_SOURCE_DIR})
+include_directories(${gmock_SOURCE_DIR}/include)
+include_directories(${gtest_SOURCE_DIR})
+include_directories(${gtest_SOURCE_DIR}/include)
 
 # Process code in each subdirectories: add in decreasing order of complexity
 # (last added will run first and those should be the fastest tests)
