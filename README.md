@@ -26,20 +26,76 @@ cmake ..
 Then build and test with
 
 ```
-make
+make test
 ```
 
 This will first compile the tests and then immediately run the tests. If tests
 are succeeding you should see output similar to:
 
 ```
-[       OK ] Example.Sub1 (1056 ms)
-[ RUN      ] Example.Sub2 
-[       OK ] Example.Sub2 (4 ms)
-[ RUN      ] Example.Sub4
-[       OK ] Example.Sub4 (2 ms)
-[----------] 3 tests from Example (1062 ms total)
+Test project /usr/local/libigl-unit-tests/build
+    Start 1: run_igl_mosek_tests
+1/4 Test #1: run_igl_mosek_tests ..............***Exception: Other  0.00 sec
+    Start 2: run_igl_boolean_tests
+2/4 Test #2: run_igl_boolean_tests ............   Passed    1.12 sec
+    Start 3: run_igl_cgal_tests
+3/4 Test #3: run_igl_cgal_tests ...............   Passed    2.46 sec
+    Start 4: run_igl_tests
 ```
+
+Alternatively, to get more detailed output you can call ctest directly with the
+verbose flag:
+
+```
+GTEST_COLOR=1 ctest --verbose
+```
+
+You'll see outputs for each individual test:
+
+```
+UpdateCTestConfiguration  from :/usr/local/libigl-unit-tests/build/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/usr/local/libigl-unit-tests/build/DartConfiguration.tcl
+Test project /usr/local/libigl-unit-tests/build
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: run_igl_mosek_tests
+
+1: Test command: /usr/local/libigl-unit-tests/build/include/igl/mosek/igl_mosek_tests
+1: Test timeout computed to be: 9.99988e+06
+1: [==========] Running 1 test from 1 test case.
+1: [----------] Global test environment set-up.
+1: [----------] 1 test from mosek_bbw
+1: [ RUN      ] mosek_bbw.decimated_knight
+1: /usr/local/libigl-unit-tests/include/igl/mosek/bbw.cpp:25: Failure
+1: Expected: ((Wmo-W_groundtruth).array().abs().maxCoeff()) < (1e-3), actual: 0.00287895 vs 0.001
+1: [  FAILED  ] mosek_bbw.decimated_knight (2126 ms)
+1: [----------] 1 test from mosek_bbw (2126 ms total)
+1: 
+1: [----------] Global test environment tear-down
+1: [==========] 1 test from 1 test case ran. (2126 ms total)
+1: [  PASSED  ] 0 tests.
+1: [  FAILED  ] 1 test, listed below:
+1: [  FAILED  ] mosek_bbw.decimated_knight
+1: 
+1:  1 FAILED TEST
+1/4 Test #1: run_igl_mosek_tests ..............***Failed    2.14 sec
+test 2
+    Start 2: run_igl_boolean_tests
+
+2: Test command: /usr/local/libigl-unit-tests/build/include/igl/copyleft/boolean/igl_boolean_tests
+2: Test timeout computed to be: 9.99988e+06
+2: [==========] Running 3 tests from 1 test case.
+2: [----------] Global test environment set-up.
+2: [----------] 3 tests from MeshBoolean
+2: [ RUN      ] MeshBoolean.TwoCubes
+...
+```
+
 
 ## Generating new tests
 
