@@ -14,6 +14,7 @@ message("Generated with config types: ${CMAKE_CONFIGURATION_TYPES}")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 # libigl options: choose your dependencies
+option(LIBIGL_USE_STATIC_LIBRARY "Use LibIGL as static library" OFF)
 option(LIBIGL_WITH_VIEWER      "Use OpenGL viewer"  OFF)
 option(LIBIGL_WITH_OPENGL      "Use OpenGL"         OFF)
 option(LIBIGL_WITH_OPENGL_GLFW "Use GLFW"           OFF)
