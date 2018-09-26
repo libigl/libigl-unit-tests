@@ -50,8 +50,8 @@ TEST_P(upsample, V_comes_first_F_ordering)
 
 INSTANTIATE_TEST_CASE_P
 (
-  all_meshes,
+  manifold_meshes,
   upsample,
-  ::testing::ValuesIn(test_common::all_meshes()),
+  ::testing::ValuesIn(test_common::manifold_meshes()),
   test_common::string_test_name
 );
