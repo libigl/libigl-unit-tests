@@ -26,4 +26,4 @@ build
 *.swp
 *.swo
 *.pyc
-
+.DS_Store
