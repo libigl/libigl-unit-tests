@@ -21,7 +21,7 @@ TEST(bbw, decimated_knight)
   igl::BBWData params;
   params.active_set_params.max_iter = 100;
   igl::bbw(V,T,b,bc,params,Was);
-  igl::writeDMAT("decimated-knight-as.dmat",Was);
+  // igl::writeDMAT("decimated-knight-as.dmat",Was);
   ASSERT_LT( (Was-W_groundtruth).array().abs().maxCoeff() ,1e-4);
 }
 
