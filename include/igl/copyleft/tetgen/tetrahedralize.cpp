@@ -47,3 +47,26 @@ TEST(tetrahedralize, schoenhardt) {
   igl::copyleft::tetgen::tetrahedralize(V,F,"pQ",TV,TT,TF);
   ASSERT_GE(TV.rows() , V.rows());
 }
+
+
+class igl_tetrahedralize : public ::testing::TestWithParam<std::string> {};
+TEST_P(igl_tetrahedralize, V_comes_first_F_ordering)
+{
+  Eigen::MatrixXd V;
+  Eigen::MatrixXi F;
+  // Load example mesh: GetParam() will be name of mesh file
+  test_common::load_mesh(GetParam(), V, F);
+  Eigen::MatrixXd TV;
+  Eigen::MatrixXi TT,TF;
+  int res = igl::copyleft::tetgen::tetrahedralize(V,F,"pQq1.4",TV,TT,TF);
+  ASSERT_EQ(res,0);
+  test_common::assert_near(TV.topRows(V.rows()),V,1e-10);
+}
+
+INSTANTIATE_TEST_CASE_P
+(
+  closed_manifold_meshes,
+  igl_tetrahedralize,
+  ::testing::ValuesIn(test_common::closed_manifold_meshes()),
+  test_common::string_test_name
+);
