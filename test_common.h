@@ -58,6 +58,13 @@ namespace test_common
     });
     return meshes;
   };
+  inline std::vector<std::string> tet_meshes()
+  {
+    return 
+    {
+      "decimated-knight.mesh"
+    };
+  };
   inline std::vector<std::string> all_meshes()
   {
     std::vector<std::string> meshes = manifold_meshes();
